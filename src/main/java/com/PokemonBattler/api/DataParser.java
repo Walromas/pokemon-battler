@@ -14,7 +14,7 @@ import jakarta.json.JsonValue;
 
 
 import com.PokemonBattler.Builder.Move;
-import com.PokemonBattler.Builder.Pokemon;
+import com.PokemonBattler.Builder.Pokemon.Pokemon;
 import com.PokemonBattler.Builder.PokemonBuilder;
 import com.PokemonBattler.Builder.Stats;
 import com.PokemonBattler.Builder.Types;

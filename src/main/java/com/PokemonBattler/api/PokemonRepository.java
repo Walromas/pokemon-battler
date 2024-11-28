@@ -7,12 +7,14 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Persistence;
 
-import com.PokemonBattler.Builder.Pokemon;
+import com.PokemonBattler.Builder.Pokemon.Pokemon;
 public class PokemonRepository {
     EntityManagerFactory emf = Persistence.createEntityManagerFactory("default");
     EntityManager em = emf.createEntityManager();
     public Pokemon savePokemon(Pokemon pokemon) {
+        em.getTransaction().begin();
         em.persist(pokemon);
+        em.getTransaction().commit();
         return pokemon;
     }
     public List<Pokemon> findAll() {
