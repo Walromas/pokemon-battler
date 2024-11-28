@@ -32,7 +32,6 @@ public class Pokemon {
     @Column(name = "name")
     private String name;
     private int level;
-    private int maxHP;
     private int currentHP;
     @Embedded
     private Stats stats;
@@ -66,6 +65,7 @@ public class Pokemon {
         this.stats = stats;
         this.moveSet = moveSet;
         this.currentMoves = currentMoves;
+        this.currentHP = stats.getHp();
     }
 
     public Pokemon() {
