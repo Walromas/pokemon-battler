@@ -70,10 +70,10 @@ public class DataParser {
 
         return new PokemonBuilder()
                 .setName(pName)
+                .setLevel(25)
                 .setStats(pStats)
                 .setMoveSet(pMoveSet)
                 .setTypes(pTypes)
-                .setLevel(25)
                 .setCurrentMoves(pMoveSet)
                 .build();
     }

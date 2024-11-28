@@ -8,6 +8,7 @@ public enum Types {
     FLYING(new String[] {"Electric", "Ice"}, new String[] {"Fighting", "Grass", "Bug"}),
     NORMAL(new String[] {"Fighting"}, new String[] {"Ghost"});
 
+
     private final String[] weaknesses;
     private final String[] resistances;
 

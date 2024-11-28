@@ -29,7 +29,13 @@ public class PokemonBuilder {
     }
 
     public PokemonBuilder setStats(Stats stats) {
-        this.stats = stats;
+        int hp = ((2 * stats.getHp()* this.level)/100) + this.level + 10;
+        int attack = ((2 * stats.getAttack()* this.level)/100) + 5;
+        int defence = ((2 * stats.getDefence()* this.level)/100) + 5;
+        int specialAttack = ((2 * stats.getSpecialAttack()* this.level)/100) + 5;
+        int speicalDefence = ((2 * stats.getSpecialDefence()* this.level)/100) + 5;
+        int speed = ((2 * stats.getSpeed()* this.level)/100) + 5;
+        this.stats = new Stats(hp, attack, defence, specialAttack, speicalDefence, speed);
         return this;
     }
 
