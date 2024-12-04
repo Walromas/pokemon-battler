@@ -24,8 +24,8 @@ public class PokemonBuilder {
     private int level;
     private final MoveFetcher moveFetcher;
 
-    public PokemonBuilder() {
-        this.moveFetcher = new ApiMoveFetcher();
+    public PokemonBuilder(MoveFetcher moveFetcher) {
+        this.moveFetcher = moveFetcher;
     }
 
     public PokemonBuilder setName(String name) {

@@ -66,13 +66,16 @@ public class PokemonParser implements APIParser<Pokemon> {
                         Map.Entry::getKey,
                         Map.Entry::getValue
                 ));
-        return new PokemonBuilder()
+        MoveFetcher moveFetcher = new ApiMoveFetcher();
+        return new PokemonBuilder(moveFetcher)
                 .setName(pName)
                 .setLevel(25)
                 .setStats(pStats)
-                .setMoveSet(pMoveSet)
                 .setTypes(pTypes)
+                .setMoveSet(pMoveSet)
                 .setCurrentMoves(pMoveSet)
                 .build();
+
+
     }
 }
