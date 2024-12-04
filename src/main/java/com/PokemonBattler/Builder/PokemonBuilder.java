@@ -1,8 +1,5 @@
 package com.PokemonBattler.Builder;
 
-import static com.PokemonBattler.api.DataParser.parseMoveData;
-import static com.PokemonBattler.api.PokemonApiClient.getMoveData;
-
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
@@ -10,7 +7,13 @@ import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import com.PokemonBattler.Builder.Move.ApiMoveFetcher;
+import com.PokemonBattler.Builder.Move.Move;
+import com.PokemonBattler.Builder.Move.MoveFetcher;
 import com.PokemonBattler.Builder.Pokemon.Pokemon;
+import com.PokemonBattler.Builder.Stats.Stats;
+import com.PokemonBattler.Builder.Stats.StatsCalculator;
+import com.PokemonBattler.api.Parse.MoveParser;
 
 public class PokemonBuilder {
     private String name;
@@ -19,6 +22,11 @@ public class PokemonBuilder {
     private Map<String, Integer> moveSet;
     private Set<Move> currentMoves;
     private int level;
+    private final MoveFetcher moveFetcher;
+
+    public PokemonBuilder() {
+        this.moveFetcher = new ApiMoveFetcher();
+    }
 
     public PokemonBuilder setName(String name) {
         this.name = name;
@@ -31,13 +39,7 @@ public class PokemonBuilder {
     }
 
     public PokemonBuilder setStats(Stats stats) {
-        int hp = ((2 * stats.getHp()* this.level)/100) + this.level + 10;
-        int attack = ((2 * stats.getAttack()* this.level)/100) + 5;
-        int defence = ((2 * stats.getDefence()* this.level)/100) + 5;
-        int specialAttack = ((2 * stats.getSpecialAttack()* this.level)/100) + 5;
-        int speicalDefence = ((2 * stats.getSpecialDefence()* this.level)/100) + 5;
-        int speed = ((2 * stats.getSpeed()* this.level)/100) + 5;
-        this.stats = new Stats(hp, attack, defence, specialAttack, speicalDefence, speed);
+        this.stats = StatsCalculator.calculateStats(stats, this.level);
         return this;
     }
 
@@ -46,6 +48,7 @@ public class PokemonBuilder {
         return this;
     }
     public PokemonBuilder setCurrentMoves(Map<String, Integer> moveSet) {
+        MoveParser moveParser = new MoveParser();
         List<String> recentMoves = moveSet.entrySet().stream()
                 .filter(entry -> entry.getValue() <= this.level)
                 .sorted(Comparator.comparingInt(Map.Entry<String, Integer>::getValue))
@@ -54,14 +57,7 @@ public class PokemonBuilder {
                 .toList();
 
         this.currentMoves = recentMoves.stream()
-                .map(moveName -> {
-                    String moveData = getMoveData(moveName);
-                    if (moveData != null) {
-                        return parseMoveData(moveData);
-                    } else {
-                        return null;
-                    }
-                })
+                .map(moveFetcher::fetchMove)
                 .filter(Objects::nonNull)
                 .collect(Collectors.toSet());
         return this;

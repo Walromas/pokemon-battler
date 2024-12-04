@@ -1,4 +1,4 @@
-package com.PokemonBattler.Builder;
+package com.PokemonBattler.Builder.Stats;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;

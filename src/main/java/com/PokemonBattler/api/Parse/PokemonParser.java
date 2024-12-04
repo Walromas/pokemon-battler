@@ -1,4 +1,4 @@
-package com.PokemonBattler.api;
+package com.PokemonBattler.api.Parse;
 
 import java.io.StringReader;
 import java.util.List;
@@ -9,19 +9,18 @@ import java.util.stream.Collectors;
 import jakarta.json.Json;
 import jakarta.json.JsonArray;
 import jakarta.json.JsonObject;
-import jakarta.json.JsonNumber;
-import jakarta.json.JsonValue;
 
-
-import com.PokemonBattler.Builder.Move;
+import com.PokemonBattler.Builder.Move.ApiMoveFetcher;
+import com.PokemonBattler.Builder.Move.MoveFetcher;
 import com.PokemonBattler.Builder.Pokemon.Pokemon;
 import com.PokemonBattler.Builder.PokemonBuilder;
-import com.PokemonBattler.Builder.Stats;
+import com.PokemonBattler.Builder.Stats.Stats;
 import com.PokemonBattler.Builder.Types;
 
-public class DataParser {
+public class PokemonParser implements APIParser<Pokemon> {
 
-    public static Pokemon parsePokemonData(String jsonResponse) {
+    @Override
+    public Pokemon parse(final String jsonResponse) {
         JsonObject pokemonJson = Json.createReader(new StringReader(jsonResponse)).readObject();
 
         String pName = pokemonJson.getString("name");
@@ -67,7 +66,6 @@ public class DataParser {
                         Map.Entry::getKey,
                         Map.Entry::getValue
                 ));
-
         return new PokemonBuilder()
                 .setName(pName)
                 .setLevel(25)
@@ -77,39 +75,4 @@ public class DataParser {
                 .setCurrentMoves(pMoveSet)
                 .build();
     }
-    public static Move parseMoveData(String jsonResponse) {
-        JsonObject moveJson = Json.createReader(new StringReader(jsonResponse)).readObject();
-
-        String mName = moveJson.getString("name");
-
-        int mAccuracy = 0;
-        JsonValue accuracyValue = moveJson.get("accuracy");
-        if (accuracyValue instanceof JsonNumber) {
-            mAccuracy = ((JsonNumber) accuracyValue).intValue();
-        }
-
-        int mPower = 0;
-        JsonValue powerValue = moveJson.get("power");
-        if (powerValue instanceof JsonNumber) {
-            mPower = ((JsonNumber) powerValue).intValue();
-        }
-
-        int mPP = 0;
-        JsonValue ppValue = moveJson.get("pp");
-        if (ppValue instanceof JsonNumber) {
-            mPP = ((JsonNumber) ppValue).intValue();
-        }
-
-        Types mTypes = Types.NORMAL;
-        JsonObject typeObject = moveJson.getJsonObject("type");
-        if (typeObject != null) {
-            String typeName = typeObject.getString("name", "normal"); // Default to "normal" if missing
-            mTypes = Types.valueOf(typeName.toUpperCase());
-        }
-
-        return new Move(mName, mTypes, mPower, mAccuracy, mPP);
-    }
-
-
 }
-
