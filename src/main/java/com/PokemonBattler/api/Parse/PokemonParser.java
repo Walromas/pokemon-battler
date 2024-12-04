@@ -10,8 +10,8 @@ import jakarta.json.Json;
 import jakarta.json.JsonArray;
 import jakarta.json.JsonObject;
 
-import com.PokemonBattler.Builder.Move.ApiMoveFetcher;
-import com.PokemonBattler.Builder.Move.MoveFetcher;
+import com.PokemonBattler.api.Fetch.ApiMoveFetcher;
+import com.PokemonBattler.api.Fetch.MoveFetcher;
 import com.PokemonBattler.Builder.Pokemon.Pokemon;
 import com.PokemonBattler.Builder.PokemonBuilder;
 import com.PokemonBattler.Builder.Stats.Stats;

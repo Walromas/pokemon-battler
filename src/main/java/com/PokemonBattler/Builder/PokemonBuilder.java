@@ -7,9 +7,7 @@ import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import com.PokemonBattler.Builder.Move.ApiMoveFetcher;
-import com.PokemonBattler.Builder.Move.Move;
-import com.PokemonBattler.Builder.Move.MoveFetcher;
+import com.PokemonBattler.api.Fetch.MoveFetcher;
 import com.PokemonBattler.Builder.Pokemon.Pokemon;
 import com.PokemonBattler.Builder.Stats.Stats;
 import com.PokemonBattler.Builder.Stats.StatsCalculator;

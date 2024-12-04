@@ -1,7 +1,5 @@
 package com.PokemonBattler;
 
-import com.PokemonBattler.Builder.Move.ApiMoveFetcher;
-import com.PokemonBattler.Builder.Move.MoveFetcher;
 import com.PokemonBattler.Builder.Pokemon.Pokemon;
 import com.PokemonBattler.api.Parse.PokemonParser;
 import com.PokemonBattler.api.PokemonApiClient;
@@ -15,6 +13,8 @@ public class App
         PokemonRepository pokemonRepo = new PokemonRepository();
         Pokemon pokemon = pokemonParser.parse(PokemonApiClient.getPokemonData("charmander"));
         pokemonRepo.savePokemon(pokemon);
+        Pokemon pokemon1 = pokemonParser.parse(PokemonApiClient.getPokemonData("spheal"));
+        pokemonRepo.savePokemon(pokemon1);
 
 
     }

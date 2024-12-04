@@ -7,7 +7,7 @@ import jakarta.json.JsonNumber;
 import jakarta.json.JsonObject;
 import jakarta.json.JsonValue;
 
-import com.PokemonBattler.Builder.Move.Move;
+import com.PokemonBattler.Builder.Move;
 import com.PokemonBattler.Builder.Types;
 
 public class MoveParser implements APIParser<Move> {
