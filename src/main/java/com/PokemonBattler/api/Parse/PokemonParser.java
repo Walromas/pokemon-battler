@@ -69,7 +69,7 @@ public class PokemonParser implements APIParser<Pokemon> {
         MoveFetcher moveFetcher = new ApiMoveFetcher();
         return new PokemonBuilder(moveFetcher)
                 .setName(pName)
-                .setLevel(25)
+                .setLevel(5)
                 .setStats(pStats)
                 .setTypes(pTypes)
                 .setMoveSet(pMoveSet)

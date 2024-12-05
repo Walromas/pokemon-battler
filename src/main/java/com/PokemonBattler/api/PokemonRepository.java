@@ -9,9 +9,9 @@ import jakarta.persistence.Persistence;
 
 import com.PokemonBattler.Builder.Pokemon.Pokemon;
 public class PokemonRepository {
-    EntityManagerFactory emf = Persistence.createEntityManagerFactory("default");
-    EntityManager em = emf.createEntityManager();
-    public Pokemon savePokemon(Pokemon pokemon) {
+    static EntityManagerFactory emf = Persistence.createEntityManagerFactory("default");
+    static EntityManager em = emf.createEntityManager();
+    public  static Pokemon savePokemon(Pokemon pokemon) {
         em.getTransaction().begin();
         em.persist(pokemon);
         em.getTransaction().commit();
