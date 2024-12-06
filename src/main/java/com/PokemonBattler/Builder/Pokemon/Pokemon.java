@@ -32,8 +32,8 @@ public class Pokemon implements Damageable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(name = "name")
     private String name;
+    private String spriteURL;
     private int level;
     private int currentHP;
     @Embedded
@@ -61,7 +61,7 @@ public class Pokemon implements Damageable {
     )
     private Set<Move> currentMoves;
 
-    public Pokemon(String name, int level, List<Types> types, Stats stats, Map<String, Integer> moveSet, Set<Move> currentMoves) {
+    public Pokemon(String name, int level, List<Types> types, Stats stats, Map<String, Integer> moveSet, Set<Move> currentMoves, String spriteURL) {
         this.name = name;
         this.level = level;
         this.types = types != null ? types : new ArrayList<>();
@@ -69,6 +69,7 @@ public class Pokemon implements Damageable {
         this.moveSet = moveSet;
         this.currentMoves = currentMoves;
         this.currentHP = stats.getHp();
+        this.spriteURL = spriteURL;
     }
 
     public Pokemon() {
@@ -81,15 +82,7 @@ public class Pokemon implements Damageable {
     }
     @Override
     public void takeDamage(int damage, Types mType, List<Types> types) {
-        for(Types element : types) {
-            if (element.isWeakTo(mType)) {
-                currentHP -= (damage * 2);
-            } else if (element.resists(mType)) {
-                currentHP -= (int) (damage * 0.5);
-            } else {
-                currentHP -= damage;
-            }
-        }
+
         if (currentHP < 0) {
             currentHP = 0;
         }
@@ -123,6 +116,10 @@ public class Pokemon implements Damageable {
     }
     public void useMove(int index) {
         System.out.println("NOT IMPLEMENTED!");
+    }
+
+    public String getSpriteURL() {
+        return spriteURL;
     }
 }
 

@@ -32,4 +32,10 @@ public class PokemonApiClient {
         return getData("move/" + moveName);
     }
 
+    @Produces(TEXT_PLAIN)
+    public static String getFormData(String pokemonName) {
+        return getData("pokemon-form/" + pokemonName);
+
+    }
+
 }

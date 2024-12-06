@@ -6,6 +6,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
+import jakarta.inject.Inject;
 import jakarta.json.Json;
 import jakarta.json.JsonArray;
 import jakarta.json.JsonObject;
@@ -18,7 +19,6 @@ import com.PokemonBattler.Builder.Stats.Stats;
 import com.PokemonBattler.Builder.Types;
 
 public class PokemonParser implements APIParser<Pokemon> {
-
     @Override
     public Pokemon parse(final String jsonResponse) {
         JsonObject pokemonJson = Json.createReader(new StringReader(jsonResponse)).readObject();
@@ -66,10 +66,11 @@ public class PokemonParser implements APIParser<Pokemon> {
                         Map.Entry::getKey,
                         Map.Entry::getValue
                 ));
-        MoveFetcher moveFetcher = new ApiMoveFetcher();
-        return new PokemonBuilder(moveFetcher)
+
+        return new PokemonBuilder()
                 .setName(pName)
-                .setLevel(5)
+                .setSpriteURL(pName)
+                .setLevel(1)
                 .setStats(pStats)
                 .setTypes(pTypes)
                 .setMoveSet(pMoveSet)

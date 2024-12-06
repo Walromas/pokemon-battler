@@ -7,27 +7,37 @@ import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import jakarta.inject.Inject;
+
+import com.PokemonBattler.api.Fetch.ApiMoveFetcher;
 import com.PokemonBattler.api.Fetch.MoveFetcher;
 import com.PokemonBattler.Builder.Pokemon.Pokemon;
 import com.PokemonBattler.Builder.Stats.Stats;
 import com.PokemonBattler.Builder.Stats.StatsCalculator;
+import com.PokemonBattler.api.Parse.FormParser;
 import com.PokemonBattler.api.Parse.MoveParser;
+import com.PokemonBattler.api.PokemonApiClient;
 
 public class PokemonBuilder {
     private String name;
+    private String spriteURL;
     private List<Types> types;
     private Stats stats;
     private Map<String, Integer> moveSet;
     private Set<Move> currentMoves;
     private int level;
-    private final MoveFetcher moveFetcher;
 
-    public PokemonBuilder(MoveFetcher moveFetcher) {
-        this.moveFetcher = moveFetcher;
-    }
+    private final MoveFetcher moveFetcher = new ApiMoveFetcher();
+
+
 
     public PokemonBuilder setName(String name) {
         this.name = name;
+        return this;
+    }
+    public PokemonBuilder setSpriteURL(String pName) {
+        FormParser formParser = new FormParser();
+        this.spriteURL = formParser.parse(PokemonApiClient.getFormData(pName));
         return this;
     }
 
@@ -46,13 +56,13 @@ public class PokemonBuilder {
         return this;
     }
     public PokemonBuilder setCurrentMoves(Map<String, Integer> moveSet) {
-        MoveParser moveParser = new MoveParser();
         List<String> recentMoves = moveSet.entrySet().stream()
                 .filter(entry -> entry.getValue() <= this.level)
                 .sorted(Comparator.comparingInt(Map.Entry<String, Integer>::getValue))
                 .map(Map.Entry::getKey)
                 .limit(4)
                 .toList();
+
 
         this.currentMoves = recentMoves.stream()
                 .map(moveFetcher::fetchMove)
@@ -66,6 +76,6 @@ public class PokemonBuilder {
     }
 
     public Pokemon build() {
-        return new Pokemon(name, level, types, stats, moveSet, currentMoves);
+        return new Pokemon(name, level, types, stats, moveSet, currentMoves,spriteURL);
     }
 }

@@ -17,6 +17,7 @@ public enum Types {
     POISON(new String[] {"Ground", "Psychic"}, new String[] {"Fighting", "Bug", "Fairy"}),
     PSYCHIC(new String[] {"Bug", "Ghost", "Dark"}, new String[] {"Fighting", "Psychic"}),
     ROCK(new String[] {"Water", "Grass", "Ground", "Steel", "Fighting"}, new String[] {"Fire", "Flying", "Bug"}),
+    GROUND(new String[] {"Fire", "Electric", "Poison", "Rock", "Steel"}, new String[] {"Water", "Ice", "Grass"}),
     STEEL(new String[] {"Fire", "Fighting", "Ground"}, new String[] {"Bug", "Fairy", "Dragon", "Rock", "Normal", "Psychic"});
 
 

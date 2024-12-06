@@ -2,9 +2,12 @@ package com.PokemonBattler.api.Fetch;
 
 import static com.PokemonBattler.api.PokemonApiClient.getMoveData;
 
+import jakarta.inject.Inject;
+
+import org.hibernate.service.spi.InjectService;
+
 import com.PokemonBattler.Builder.Move;
 import com.PokemonBattler.api.Parse.MoveParser;
-
 public class ApiMoveFetcher implements MoveFetcher {
 
     @Override

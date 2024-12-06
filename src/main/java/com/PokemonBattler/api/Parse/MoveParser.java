@@ -2,6 +2,7 @@ package com.PokemonBattler.api.Parse;
 
 import java.io.StringReader;
 
+import jakarta.inject.Inject;
 import jakarta.json.Json;
 import jakarta.json.JsonNumber;
 import jakarta.json.JsonObject;
@@ -11,6 +12,10 @@ import com.PokemonBattler.Builder.Move;
 import com.PokemonBattler.Builder.Types;
 
 public class MoveParser implements APIParser<Move> {
+    @Inject
+    public MoveParser() {
+
+    }
     @Override
     public Move parse(final String jsonResponse) {
         JsonObject moveJson = Json.createReader(new StringReader(jsonResponse)).readObject();
