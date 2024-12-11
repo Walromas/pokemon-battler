@@ -1,6 +1,7 @@
 package com.PokemonBattler.api.Parse;
 
 import java.io.StringReader;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -66,11 +67,16 @@ public class PokemonParser implements APIParser<Pokemon> {
                         Map.Entry::getKey,
                         Map.Entry::getValue
                 ));
+        String pFrontSprite = pokemonJson.getJsonObject("sprites").getString("front_default");
+        String pBackSprite = pokemonJson.getJsonObject("sprites").getString("back_default");
+
+
 
         return new PokemonBuilder()
                 .setName(pName)
-                .setSpriteURL(pName)
-                .setLevel(1)
+                .setBackSpriteURL(pBackSprite)
+                .setFrontSpriteURL(pFrontSprite)
+                .setLevel(5)
                 .setStats(pStats)
                 .setTypes(pTypes)
                 .setMoveSet(pMoveSet)

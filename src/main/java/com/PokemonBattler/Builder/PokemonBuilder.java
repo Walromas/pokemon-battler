@@ -7,20 +7,16 @@ import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import jakarta.inject.Inject;
-
 import com.PokemonBattler.api.Fetch.ApiMoveFetcher;
 import com.PokemonBattler.api.Fetch.MoveFetcher;
 import com.PokemonBattler.Builder.Pokemon.Pokemon;
 import com.PokemonBattler.Builder.Stats.Stats;
 import com.PokemonBattler.Builder.Stats.StatsCalculator;
-import com.PokemonBattler.api.Parse.FormParser;
-import com.PokemonBattler.api.Parse.MoveParser;
-import com.PokemonBattler.api.PokemonApiClient;
 
 public class PokemonBuilder {
     private String name;
-    private String spriteURL;
+    private String backSpriteURL;
+    private String frontSpriteURL;
     private List<Types> types;
     private Stats stats;
     private Map<String, Integer> moveSet;
@@ -35,9 +31,12 @@ public class PokemonBuilder {
         this.name = name;
         return this;
     }
-    public PokemonBuilder setSpriteURL(String pName) {
-        FormParser formParser = new FormParser();
-        this.spriteURL = formParser.parse(PokemonApiClient.getFormData(pName));
+    public PokemonBuilder setBackSpriteURL(String backSpriteURL) {
+        this.backSpriteURL = backSpriteURL;
+        return this;
+    }
+    public PokemonBuilder setFrontSpriteURL(String frontSpriteURL) {
+        this.frontSpriteURL = frontSpriteURL;
         return this;
     }
 
@@ -76,6 +75,6 @@ public class PokemonBuilder {
     }
 
     public Pokemon build() {
-        return new Pokemon(name, level, types, stats, moveSet, currentMoves,spriteURL);
+        return new Pokemon(name, level, types, stats, moveSet, currentMoves,backSpriteURL, frontSpriteURL);
     }
 }

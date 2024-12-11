@@ -10,10 +10,12 @@ import com.PokemonBattler.api.Parse.PokemonParser;
 import com.PokemonBattler.api.PokemonApiClient;
 import com.PokemonBattler.api.PokemonRepository;
 
+import javafx.stage.Stage;
+
 public class StarterGenerator {
     public List<Pokemon> generateStarters(PokemonParser pokemonParser) {
         Random rand = new Random();
-        int upperbound = 1026;
+        int upperbound = 906;
         List<Pokemon> starterList = new ArrayList<>();
 
         for(int i = 0; i < 3; i++) {
@@ -23,33 +25,11 @@ public class StarterGenerator {
         return starterList;
     }
 
-    public Pokemon pickStarter(List<Pokemon> starterList) {
-        Scanner scanner = new Scanner(System.in);
-
-        System.out.println("Choose your starter Pokémon:");
-        for (int i = 0; i < starterList.size(); i++) {
-            System.out.println((i + 1) + ". " + starterList.get(i).getName());
-        }
-
-        int choice = -1;
-
-        while (choice < 1 || choice > starterList.size()) {
-            System.out.print("Enter the number of your choice: ");
-            if (scanner.hasNextInt()) {
-                choice = scanner.nextInt();
-                if (choice < 1 || choice > starterList.size()) {
-                    System.out.println("Invalid choice. Please select a number between 1 and " + starterList.size());
-                }
-            } else {
-                System.out.println("Invalid input. Please enter a number.");
-                scanner.next(); // Clear invalid input
-            }
-        }
-
-        Pokemon selectedPokemon = starterList.get(choice - 1);
-        PokemonRepository.savePokemon(selectedPokemon);
+    public void pickStarter(Pokemon selectedPokemon, Stage stage) {
         System.out.println("You chose: " + selectedPokemon.getName());
-        return selectedPokemon;
+        PokemonRepository.savePokemon(selectedPokemon);
+        stage.close();
 
     }
+
 }

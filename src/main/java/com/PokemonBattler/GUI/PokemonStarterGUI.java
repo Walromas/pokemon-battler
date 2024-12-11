@@ -11,6 +11,7 @@ import com.PokemonBattler.api.Parse.PokemonParser;
 import javafx.application.Application;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -31,9 +32,9 @@ public class PokemonStarterGUI extends Application {
         Pokemon starter2 = starterList.get(1);
         Pokemon starter3 = starterList.get(2);
 
-        String starter1Url = starter1.getSpriteURL();
-        String starter2Url = starter2.getSpriteURL();
-        String starter3Url = starter3.getSpriteURL();
+        String starter1Url = starter1.getFrontSpriteURL();
+        String starter2Url = starter2.getFrontSpriteURL();
+        String starter3Url = starter3.getFrontSpriteURL();
 
         String starter1name = starter1.getName();
         String starter2name = starter2.getName();
@@ -46,34 +47,49 @@ public class PokemonStarterGUI extends Application {
         URL url = new URL("https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/");
         DisableSSLVerification.openConnectionWithCustomSSL(url);
 
+        Button buttonStarter1 = createPokemonButton(starter1name, starter1Url);
+        Button buttonStarter2 = createPokemonButton(starter2name, starter2Url);
+        Button buttonStarter3 = createPokemonButton(starter3name, starter3Url);
+
         root.getChildren().addAll(
-                createPokemonPanel(starter1name, starter1Url),
-                createPokemonPanel(starter2name, starter2Url),
-                createPokemonPanel(starter3name, starter3Url)
+                buttonStarter1,
+                buttonStarter2,
+                buttonStarter3
         );
+
+        buttonStarter1.setOnAction(event -> starterGenerator.pickStarter(starter1, stage));
+        buttonStarter2.setOnAction(event -> starterGenerator.pickStarter(starter2, stage));
+        buttonStarter3.setOnAction(event -> starterGenerator.pickStarter(starter3,stage));
 
         Scene scene = new Scene(root);
         stage.setTitle("Pokémon Starters");
         stage.setScene(scene);
         stage.setFullScreen(true);
         stage.show();
+
     }
 
-    private VBox createPokemonPanel(String name, String imageUrl) {
+    private Button createPokemonButton(String name, String imageUrl) {
         ImageView imageView = new ImageView(new Image(imageUrl));
-        imageView.setFitWidth(150);
-        imageView.setFitHeight(150);
+        imageView.setFitWidth(200);
+        imageView.setFitHeight(200);
+
 
         Label nameLabel = new Label(name);
         nameLabel.setStyle("-fx-font-size: 20px; -fx-text-fill: white;");
 
 
         VBox panel = new VBox(15, imageView, nameLabel);
-        panel.setStyle("-fx-background-color: grey; -fx-padding: 20; -fx-border-radius: 10; -fx-background-radius: 10;");
+        panel.setStyle("-fx-background-color: Transparent; -fx-padding: 20; -fx-border-radius: 10; -fx-background-radius: 10;");
         panel.setAlignment(Pos.CENTER);
         panel.setPrefWidth(300);
 
-        return panel;
+        Button button = new Button();
+        button.setGraphic(panel);
+        button.setStyle("-fx-background-color: Transparent");
+
+
+        return button;
     }
 
     public static void main(String[] args) {
