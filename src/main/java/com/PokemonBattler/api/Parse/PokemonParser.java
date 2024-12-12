@@ -1,25 +1,28 @@
 package com.PokemonBattler.api.Parse;
 
 import java.io.StringReader;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.enterprise.inject.Alternative;
 import jakarta.inject.Inject;
 import jakarta.json.Json;
 import jakarta.json.JsonArray;
 import jakarta.json.JsonObject;
 
-import com.PokemonBattler.api.Fetch.ApiMoveFetcher;
-import com.PokemonBattler.api.Fetch.MoveFetcher;
 import com.PokemonBattler.Builder.Pokemon.Pokemon;
 import com.PokemonBattler.Builder.PokemonBuilder;
 import com.PokemonBattler.Builder.Stats.Stats;
 import com.PokemonBattler.Builder.Types;
 
+@ApplicationScoped
 public class PokemonParser implements APIParser<Pokemon> {
+
+    @Inject
+    PokemonBuilder pokemonBuilder;
     @Override
     public Pokemon parse(final String jsonResponse) {
         JsonObject pokemonJson = Json.createReader(new StringReader(jsonResponse)).readObject();
@@ -72,7 +75,7 @@ public class PokemonParser implements APIParser<Pokemon> {
 
 
 
-        return new PokemonBuilder()
+        return pokemonBuilder
                 .setName(pName)
                 .setBackSpriteURL(pBackSprite)
                 .setFrontSpriteURL(pFrontSprite)

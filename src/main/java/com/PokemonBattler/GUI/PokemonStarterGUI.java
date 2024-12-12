@@ -4,6 +4,12 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.List;
 
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.inject.Inject;
+
+import org.jboss.weld.environment.se.Weld;
+import org.jboss.weld.environment.se.WeldContainer;
+
 import com.PokemonBattler.Builder.Pokemon.Pokemon;
 import com.PokemonBattler.Encounters.StarterGenerator;
 import com.PokemonBattler.api.Parse.PokemonParser;
@@ -21,12 +27,18 @@ import javafx.stage.Stage;
 
 public class PokemonStarterGUI extends Application {
 
+    private StarterGenerator starterGenerator;
+
+    @Override
+    public void init() {
+        Weld weld = new Weld();
+        WeldContainer weldContainer = weld.initialize();
+        this.starterGenerator = weldContainer.select(StarterGenerator.class).get();
+    }
+
     @Override
     public void start(Stage stage) throws MalformedURLException {
-
-        PokemonParser pokemonParser = new PokemonParser();
-        StarterGenerator starterGenerator = new StarterGenerator();
-        List<Pokemon> starterList = starterGenerator.generateStarters(pokemonParser);
+        List<Pokemon> starterList = starterGenerator.generateStarters();
 
         Pokemon starter1 = starterList.get(0);
         Pokemon starter2 = starterList.get(1);

@@ -2,20 +2,21 @@ package com.PokemonBattler.api.Parse;
 
 import java.io.StringReader;
 
+import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.json.Json;
 import jakarta.json.JsonNumber;
 import jakarta.json.JsonObject;
 import jakarta.json.JsonValue;
+import jakarta.ws.rs.Produces;
+
+import org.hibernate.service.spi.InjectService;
 
 import com.PokemonBattler.Builder.Move;
 import com.PokemonBattler.Builder.Types;
-
+@ApplicationScoped
 public class MoveParser implements APIParser<Move> {
-    @Inject
-    public MoveParser() {
 
-    }
     @Override
     public Move parse(final String jsonResponse) {
         JsonObject moveJson = Json.createReader(new StringReader(jsonResponse)).readObject();

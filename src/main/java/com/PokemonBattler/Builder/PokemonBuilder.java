@@ -7,12 +7,16 @@ import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import com.PokemonBattler.api.Fetch.ApiMoveFetcher;
-import com.PokemonBattler.api.Fetch.MoveFetcher;
+import jakarta.enterprise.context.Dependent;
+import jakarta.enterprise.inject.se.SeContainer;
+import jakarta.enterprise.inject.se.SeContainerInitializer;
+import jakarta.inject.Inject;
+
 import com.PokemonBattler.Builder.Pokemon.Pokemon;
 import com.PokemonBattler.Builder.Stats.Stats;
 import com.PokemonBattler.Builder.Stats.StatsCalculator;
-
+import com.PokemonBattler.api.Fetch.MoveFetcher;
+@Dependent
 public class PokemonBuilder {
     private String name;
     private String backSpriteURL;
@@ -23,8 +27,8 @@ public class PokemonBuilder {
     private Set<Move> currentMoves;
     private int level;
 
-    private final MoveFetcher moveFetcher = new ApiMoveFetcher();
-
+    @Inject
+    MoveFetcher moveFetcher;
 
 
     public PokemonBuilder setName(String name) {
