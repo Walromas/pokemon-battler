@@ -4,15 +4,11 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.List;
 
-import jakarta.enterprise.context.ApplicationScoped;
-import jakarta.inject.Inject;
-
 import org.jboss.weld.environment.se.Weld;
 import org.jboss.weld.environment.se.WeldContainer;
 
 import com.PokemonBattler.Builder.Pokemon.Pokemon;
 import com.PokemonBattler.Encounters.StarterGenerator;
-import com.PokemonBattler.api.Parse.PokemonParser;
 
 import javafx.application.Application;
 import javafx.geometry.Pos;
@@ -22,7 +18,6 @@ import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
-import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
 public class PokemonStarterGUI extends Application {

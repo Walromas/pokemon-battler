@@ -8,14 +8,15 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 import jakarta.enterprise.context.Dependent;
-import jakarta.enterprise.inject.se.SeContainer;
-import jakarta.enterprise.inject.se.SeContainerInitializer;
 import jakarta.inject.Inject;
 
+import com.PokemonBattler.API.MoveREST.MoveService;
+import com.PokemonBattler.Builder.Move.Move;
 import com.PokemonBattler.Builder.Pokemon.Pokemon;
 import com.PokemonBattler.Builder.Stats.Stats;
 import com.PokemonBattler.Builder.Stats.StatsCalculator;
-import com.PokemonBattler.api.Fetch.MoveFetcher;
+import com.PokemonBattler.Builder.Types.Types;
+
 @Dependent
 public class PokemonBuilder {
     private String name;
@@ -28,7 +29,7 @@ public class PokemonBuilder {
     private int level;
 
     @Inject
-    MoveFetcher moveFetcher;
+    MoveService moveService;
 
 
     public PokemonBuilder setName(String name) {
@@ -68,7 +69,7 @@ public class PokemonBuilder {
 
 
         this.currentMoves = recentMoves.stream()
-                .map(moveFetcher::fetchMove)
+                .map(moveService::createMove)
                 .filter(Objects::nonNull)
                 .collect(Collectors.toSet());
         return this;

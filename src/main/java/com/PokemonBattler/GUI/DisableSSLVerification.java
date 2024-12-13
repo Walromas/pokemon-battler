@@ -10,7 +10,7 @@ import java.security.cert.X509Certificate;
 public class DisableSSLVerification {
     public static HttpURLConnection openConnectionWithCustomSSL(URL url) {
         try {
-            if (url.getHost().contains("githubusercontent.com")) {
+            if (url.getHost().contains(".githubusercontent.com")) {
                 // Disable SSL verification for specific website
                 SSLContext sc = SSLContext.getInstance("TLS");
                 TrustManager[] trustAllCertificates = new TrustManager[]{

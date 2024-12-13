@@ -2,7 +2,7 @@ package com.PokemonBattler.Battle;
 
 import java.util.List;
 
-import com.PokemonBattler.Builder.Types;
+import com.PokemonBattler.Builder.Types.Types;
 
 public class TypeEffectivenessService {
     public static double getEffectiveness(Types mType, List<Types> pTypes) {

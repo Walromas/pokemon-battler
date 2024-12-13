@@ -22,9 +22,9 @@ import jakarta.persistence.ManyToMany;
 import jakarta.persistence.MapKeyColumn;
 import jakarta.persistence.Table;
 
-import com.PokemonBattler.Builder.Move;
+import com.PokemonBattler.Builder.Move.Move;
 import com.PokemonBattler.Builder.Stats.Stats;
-import com.PokemonBattler.Builder.Types;
+import com.PokemonBattler.Builder.Types.Types;
 
 @Entity
 @Table(name = "Pokemon")
