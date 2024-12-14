@@ -1,5 +1,7 @@
 package com.PokemonBattler.Builder.Pokemon;
 
+import static com.PokemonBattler.Battle.DamageCalculator.calculateDamage;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -83,7 +85,10 @@ public class Pokemon implements Damageable {
         return "Pokemon{name='" + name + "', types=" + types + ", stats=" + stats + ", moveSet=" + moveSet + "}";
     }
     @Override
-    public void takeDamage(int damage, Types mType, List<Types> types) {
+    public void takeDamage(Move move, Pokemon opponent, Pokemon defender) {
+        int damage = calculateDamage(move, opponent, defender);
+
+        currentHP = currentHP - damage;
 
         if (currentHP < 0) {
             currentHP = 0;

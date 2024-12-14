@@ -9,12 +9,15 @@ import jakarta.inject.Inject;
 
 import com.PokemonBattler.API.PokemonREST.PokemonService;
 import com.PokemonBattler.Builder.Pokemon.Pokemon;
+import com.PokemonBattler.GUI.BattleScene;
 
 import javafx.stage.Stage;
 @ApplicationScoped
 public class StarterGenerator {
     @Inject
     PokemonService pokemonService;
+    @Inject
+    BattleScene battleScene;
     public List<Pokemon> generateStarters() {
         Random rand = new Random();
         int upperbound = 906;
@@ -30,7 +33,7 @@ public class StarterGenerator {
     public void pickStarter(Pokemon selectedPokemon, Stage stage) {
         System.out.println("You chose: " + selectedPokemon.getName());
         pokemonService.savePokemon(selectedPokemon);
-        stage.close();
+        battleScene.startScene(stage);
 
     }
 

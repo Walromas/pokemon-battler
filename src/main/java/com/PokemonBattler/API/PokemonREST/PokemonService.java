@@ -1,5 +1,7 @@
 package com.PokemonBattler.API.PokemonREST;
 
+import java.util.Optional;
+
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 
