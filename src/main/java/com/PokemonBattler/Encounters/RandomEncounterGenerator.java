@@ -15,7 +15,7 @@ public class RandomEncounterGenerator {
 
     public Pokemon generateRandPokemon() {
         Random rand = new Random();
-        int upperbound = 906;
+        int upperbound = 649;
         Long randomId = (long) rand.nextInt(upperbound);
         return pokemonService.createPokemon(String.valueOf(randomId));
     }

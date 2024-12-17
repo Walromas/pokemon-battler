@@ -1,5 +1,6 @@
 package com.PokemonBattler.API.PokemonREST;
 
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
 import jakarta.enterprise.context.ApplicationScoped;
@@ -24,5 +25,10 @@ public class PokemonService {
     }
     public void savePokemon(Pokemon pokemon) {
         pokemonRepository.savePokemon(pokemon);
+    }
+
+    public Pokemon findPokemonById(Long id) {
+        return pokemonRepository.findById(id)
+                .orElseThrow(() -> new NoSuchElementException("Pokemon with ID " + id + " not found."));
     }
 }

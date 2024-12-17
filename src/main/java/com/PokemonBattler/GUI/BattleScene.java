@@ -5,6 +5,7 @@ import java.util.Objects;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 
+import com.PokemonBattler.API.PokemonREST.PokemonService;
 import com.PokemonBattler.Builder.Pokemon.Pokemon;
 import com.PokemonBattler.Encounters.RandomEncounterGenerator;
 
@@ -17,6 +18,8 @@ import javafx.stage.Stage;
 public class BattleScene {
     @Inject
     RandomEncounterGenerator randomEncounterGenerator;
+    @Inject
+    PokemonService pokemonService;
     public void startScene(Stage stage) {
         Image backgroundImage = new Image(Objects.requireNonNull(getClass().getResource("/Images/Battle.png")).toExternalForm());
         ImageView backgroundView = new ImageView(backgroundImage);
@@ -31,9 +34,17 @@ public class BattleScene {
 
         Pokemon encounter = randomEncounterGenerator.generateRandPokemon();
         String encounterSprite = encounter.getFrontSpriteURL();
-        ImageView encounterImageView = new ImageView(new Image(encounterSprite));
+        ImageView encounterImageView = createPokemonImage(encounterSprite);
+        encounterImageView.setX(875);
+        encounterImageView.setY(280);
 
+        Pokemon pokemon = pokemonService.findPokemonById(1L);
+        String pokemonSprite = pokemon.getBackSpriteURL();
+        ImageView pokemonImageView = createPokemonImage(pokemonSprite);
+        pokemonImageView.setX(330);
+        pokemonImageView.setY(490);
 
+        root.getChildren().addAll(encounterImageView, pokemonImageView);
 
         Scene battleScene = new Scene(root, 800, 600);
 
@@ -41,5 +52,11 @@ public class BattleScene {
         stage.setFullScreen(true);
         stage.setTitle("Pokémon Battle!");
         stage.show();
+    }
+    private ImageView createPokemonImage(String sprite) {
+        ImageView pokemonImageView = new ImageView(new Image(sprite));
+        pokemonImageView.setFitWidth(275);
+        pokemonImageView.setFitHeight(275);
+        return pokemonImageView;
     }
 }

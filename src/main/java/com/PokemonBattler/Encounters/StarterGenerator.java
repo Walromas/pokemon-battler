@@ -20,7 +20,7 @@ public class StarterGenerator {
     BattleScene battleScene;
     public List<Pokemon> generateStarters() {
         Random rand = new Random();
-        int upperbound = 906;
+        int upperbound = 649;
         List<Pokemon> starterList = new ArrayList<>();
 
         for(int i = 0; i < 3; i++) {
