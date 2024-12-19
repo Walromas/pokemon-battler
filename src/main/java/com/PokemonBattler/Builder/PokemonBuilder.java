@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.concurrent.CompletableFuture;
 import java.util.stream.Collectors;
 
 import jakarta.enterprise.context.Dependent;
@@ -67,10 +68,13 @@ public class PokemonBuilder {
                 .limit(4)
                 .toList();
 
-
-        this.currentMoves = recentMoves.stream()
+        List<CompletableFuture<Move>> moveFutures = recentMoves.stream()
                 .map(moveService::createMove)
                 .filter(Objects::nonNull)
+                .toList();
+
+        this.currentMoves = moveFutures.stream()
+                .map(CompletableFuture::join)
                 .collect(Collectors.toSet());
         return this;
     }

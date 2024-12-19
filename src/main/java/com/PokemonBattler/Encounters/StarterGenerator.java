@@ -3,6 +3,7 @@ package com.PokemonBattler.Encounters;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import java.util.concurrent.CompletableFuture;
 
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
@@ -21,13 +22,16 @@ public class StarterGenerator {
     public List<Pokemon> generateStarters() {
         Random rand = new Random();
         int upperbound = 649;
-        List<Pokemon> starterList = new ArrayList<>();
+        List<CompletableFuture<Pokemon>> starterList = new ArrayList<>();
 
         for(int i = 0; i < 3; i++) {
             Long randomId = (long) rand.nextInt(upperbound);
             starterList.add(pokemonService.createPokemon(String.valueOf(randomId)));
         }
-        return starterList;
+
+        return starterList.stream()
+                .map(CompletableFuture::join)
+                .toList();
     }
 
     public void pickStarter(Pokemon selectedPokemon, Stage stage) {

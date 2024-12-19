@@ -11,6 +11,7 @@ import com.PokemonBattler.Builder.Move.Move;
 import com.PokemonBattler.Builder.Pokemon.Pokemon;
 import com.PokemonBattler.Encounters.RandomEncounterGenerator;
 
+import javafx.beans.property.ReadOnlyDoubleProperty;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;

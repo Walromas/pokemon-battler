@@ -4,10 +4,14 @@ import java.io.StringReader;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.concurrent.CompletableFuture;
 import java.util.stream.Collectors;
 
 import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.enterprise.context.Dependent;
+import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;
+import jakarta.inject.Provider;
 import jakarta.json.Json;
 import jakarta.json.JsonArray;
 import jakarta.json.JsonObject;
@@ -19,14 +23,17 @@ import com.PokemonBattler.Builder.Types.Types;
 
 @ApplicationScoped
 public class PokemonParser implements APIParser<Pokemon> {
-
     @Inject
-    PokemonBuilder pokemonBuilder;
+    Provider<PokemonBuilder> pokemonBuilderProvider;
+
     @Override
     public Pokemon parse(final String jsonResponse) {
         JsonObject pokemonJson = Json.createReader(new StringReader(jsonResponse)).readObject();
 
+        PokemonBuilder pokemonBuilder = pokemonBuilderProvider.get();
+
         String pName = pokemonJson.getString("name");
+
 
         List<Types> pTypes = pokemonJson.getJsonArray("types").stream()
                 .map(typeValue -> {
@@ -71,8 +78,6 @@ public class PokemonParser implements APIParser<Pokemon> {
                 ));
         String pFrontSprite = pokemonJson.getJsonObject("sprites").getString("front_default");
         String pBackSprite = pokemonJson.getJsonObject("sprites").getString("back_default");
-
-
 
         return pokemonBuilder
                 .setName(pName)

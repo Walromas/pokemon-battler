@@ -1,5 +1,7 @@
 package com.PokemonBattler.API.MoveREST;
 
+import java.util.concurrent.CompletableFuture;
+
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 
@@ -13,8 +15,8 @@ public class MoveService {
     @Inject
     MoveApiClient moveApiClient;
 
-    public Move createMove(String moveName) {
-        String jsonResponse = moveApiClient.getMoveData(moveName);
-        return moveParser.parse(jsonResponse);
+    public CompletableFuture<Move> createMove(String moveName) {
+        return moveApiClient.getMoveData(moveName)
+                .thenApply(jsonresponse -> moveParser.parse(jsonresponse));
     }
 }
