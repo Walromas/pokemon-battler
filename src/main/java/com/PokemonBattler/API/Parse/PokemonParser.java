@@ -76,6 +76,7 @@ public class PokemonParser implements APIParser<Pokemon> {
                         Map.Entry::getKey,
                         Map.Entry::getValue
                 ));
+
         String pFrontSprite = pokemonJson.getJsonObject("sprites").getString("front_default");
         String pBackSprite = pokemonJson.getJsonObject("sprites").getString("back_default");
 
